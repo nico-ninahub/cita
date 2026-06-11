@@ -77,21 +77,21 @@
   ];
 
   const finaleMessages = [
-    "Gracias por aceptar, Javi. Tu valentía será recompensada con comida, risas y si vemos un perrito, lo saludamos. Es ley.",
+    "Gracias por aceptar, Javi. Tu valentía será recompensada con comida, risas y harto cariñito.",
     "Confirmación recibida. Procedo a emocionarme de forma moderada, elegante y solo un poquito ridícula.",
-    "Se recomienda asistir con hambre, paciencia y disposición a reírse de mis chistes malos.",
+    "Se recomienda asistir con hambre, paciencia y disposición a reírse de mis idioteces.",
     "La cita quedó agendada con prioridad alta, Javi. Más alta que cualquier otra cosa de mi semana, sinceramente.",
     "Anotado todo. Si en el camino aparece un perrito, se detiene la cita momentáneamente para apreciarlo. No se discute.",
   ];
 
   // mensaje dramático según el plan elegido (emoji, frase, subtítulo)
   const planMessages = {
-    "Cafetería bonita": ["☕", "buena elección, Javi…", "ya estoy practicando cómo sostener la taza de forma interesante"],
+    "Cafetería bonita": ["☕", "buena elección, Javi…", "Ahora quizas me atreva a probar el matcha 😅"],
     "Sushi":            ["🍣", "excelente gusto…", "voy a fingir que sé pedir como todo un experto"],
     "Atardecer":        ["🌅", "qué romántica…", "el sol ya está coordinando su mejor entrada para ti"],
-    "Helado y paseo":   ["🍦", "plan ganador…", "simple, efectivo y con alto retorno emocional"],
+    "Helado y paseo":   ["🍦", "plan simple…", "efectivo y bonito"],
     "Ver perritos":     ["🐶", "SABÍA que elegirías esto…", "preparando lista de todos los perritos que vamos a saludar"],
-    "Cine + comida":    ["🎬", "perfecto…", "ya tengo opiniones fuertes sobre el final, advierto"],
+    "Cine + comida":    ["🎬", "perfecto…", "prometo no dormirme jajaa"],
   };
   // mensaje genérico para planes inventados
   const customPlanMessages = [
@@ -545,7 +545,7 @@
   const WHATSAPP_NUMBER = "56946137389";
 
   function summaryText() {
-    return `¡Acepto la cita! ♡\n\n📍 Plan: ${state.plan}\n📅 Fecha: ${formatDate(state.date)}\n⏰ Horario: ${state.time}\n\n— Javiera 🐾`;
+    return `¡Acepto la cita! ♡\n\n📍 Plan: ${state.plan}\n📅 Fecha: ${formatDate(state.date)}\n⏰ Horario: ${state.time}\n\n— Javi 💘`;
   }
 
   $("#shareBtn").addEventListener("click", () => {
