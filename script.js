@@ -33,6 +33,24 @@
   const loadingText = $("#loadingText");
   const pickedLabel = $("#pickedLabel");
 
+  // overlays de imágenes/gifs
+  const puppyIntro = $("#puppyIntro");
+  const confettiGif = $("#confettiGif");
+  const heartGif = $("#heartGif");
+
+  // reproduce un overlay con fade in/out suave
+  function playOverlay(el, mode = "normal") {
+    if (!el) return;
+    el.classList.remove("is-fading-fast", "is-fading", "is-fading--long");
+    void el.offsetWidth; // reinicia la animación
+    const className = mode === "fast"
+      ? "is-fading-fast"
+      : mode === "long"
+        ? "is-fading--long"
+        : "is-fading";
+    el.classList.add(className);
+  }
+
   // ── frases ──────────────────────────────────────────
 
   const noPhrases = [
@@ -100,6 +118,10 @@
       });
     });
     screens[name].classList.add("screen--active");
+    // el botón No solo existe en la pantalla de la pregunta
+    if (name !== "question") {
+      noBtn.classList.remove("is-placed");
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -150,6 +172,8 @@
   // ── botón No fugitivo (pantalla completa) ───────────
 
   function placeNoAtAnchor() {
+    // solo posiciona si seguimos en la pantalla de la pregunta
+    if (!screens.question.classList.contains("screen--active")) return;
     // alinea el botón No con el centro del botón Sí (mismo eje horizontal)
     noBtn.classList.add("is-placed");
     const aRect = noAnchor.getBoundingClientRect();
@@ -297,6 +321,7 @@
     heartBurst(rect.left + rect.width / 2, rect.top);
     noBtn.classList.remove("is-placed");
     runConfetti(2600);
+    playOverlay(confettiGif, "normal"); // gif de confeti sutil, más pequeño y arriba
     showScreen("loading");
 
     // mensajes rotando mientras "procesa sentimientos"
@@ -513,28 +538,23 @@
     renderSummary();
     showScreen("final");
     runConfetti(2400);
+    playOverlay(heartGif, "long"); // gif de corazón abrazado, más rápido que antes
   });
 
+  // número de WhatsApp de destino (formato internacional sin signos)
+  const WHATSAPP_NUMBER = "56946137389";
+
   function summaryText() {
-    return `Acepto la cita ♡\n\nPlan: ${state.plan}\nFecha: ${formatDate(state.date)}\nHorario: ${state.time}\n\n— Javiera 🐾`;
+    return `¡Acepto la cita! ♡\n\n📍 Plan: ${state.plan}\n📅 Fecha: ${formatDate(state.date)}\n⏰ Horario: ${state.time}\n\n— Javiera 🐾`;
   }
 
-  $("#shareBtn").addEventListener("click", async () => {
+  $("#shareBtn").addEventListener("click", () => {
     const text = summaryText();
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: "Respuesta de la cita ♡", text });
-        return;
-      } catch (err) {
-        // si cancela, copiamos igual
-      }
-    }
-    try {
-      await navigator.clipboard.writeText(text);
-      toast("respuesta copiada ♡ ahora envíamela antes de que me dé ansiedad");
-    } catch (err) {
-      toast("no pude copiar, pero la intención romántica sigue intacta");
-    }
+    // abre directamente el chat de WhatsApp con el mensaje listo para enviar
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+    sparkBurst(window.innerWidth / 2, window.innerHeight * 0.7);
+    toast("abriendo WhatsApp… solo aprieta enviar ♡");
+    window.open(url, "_blank");
   });
 
   $("#restartBtn").addEventListener("click", () => {
@@ -624,6 +644,9 @@
 
   spawnBgHearts();
   renderCalendar();
+
+  // perrito sonrojado en forma de corazón al entrar (fade in/out suave)
+  setTimeout(() => playOverlay(puppyIntro, "fast"), 150);
 
   // posiciona el botón No alineado al Sí, ya que las animaciones de entrada
   // mueven los elementos; re-ubicamos cuando todo está asentado

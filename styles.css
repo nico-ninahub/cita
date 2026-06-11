@@ -428,6 +428,75 @@ button { -webkit-tap-highlight-color: transparent; cursor: pointer; }
   to   { opacity: 1; transform: scale(1) rotate(-4deg); }
 }
 
+/* ── overlays de imágenes/gifs (sutiles, encima de todo) ── */
+.media-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  opacity: 0;
+}
+.media-overlay img {
+  display: block;
+  opacity: 0.84;
+  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 58%, rgba(0, 0, 0, 0.82) 74%, rgba(0, 0, 0, 0.34) 88%, transparent 100%);
+  mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 1) 58%, rgba(0, 0, 0, 0.82) 74%, rgba(0, 0, 0, 0.34) 88%, transparent 100%);
+}
+.media-overlay--center img {
+  display: block;
+}
+
+/* perrito inicial sin marco de corazón, con bordes suaves */
+.puppy-heart {
+  width: clamp(150px, 44vw, 215px);
+  aspect-ratio: 1 / 1;
+  border-radius: 28px;
+  overflow: hidden;
+  filter: drop-shadow(0 10px 26px rgba(226, 109, 146, 0.26));
+}
+.puppy-heart img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 32%;
+  display: block;
+}
+
+/* gifs de confeti y corazón, más sutiles */
+#confettiGif {
+  align-items: start;
+  padding-top: clamp(20px, 9vh, 74px);
+}
+#confettiGif img {
+  width: clamp(105px, 28vw, 150px);
+  height: auto;
+  filter: drop-shadow(0 8px 18px rgba(226, 109, 146, 0.16));
+}
+#heartGif img {
+  width: clamp(145px, 38vw, 210px);
+  height: auto;
+  filter: drop-shadow(0 10px 24px rgba(226, 109, 146, 0.22));
+}
+
+/* animaciones de fade suave */
+.media-overlay.is-fading-fast {
+  animation: fadeInOut 1.7s ease-out forwards;
+}
+.media-overlay.is-fading {
+  animation: fadeInOut 2.15s ease-out forwards;
+}
+.media-overlay.is-fading--long {
+  animation: fadeInOut 2.35s ease-out forwards;
+}
+@keyframes fadeInOut {
+  0%   { opacity: 0; transform: scale(0.94); }
+  18%  { opacity: 1; transform: scale(1); }
+  64%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.03); }
+}
+
 /* ── loader ── */
 .loader {
   width: 84px;
